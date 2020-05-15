@@ -4,6 +4,7 @@ import com.example.demo.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.KeyedObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +24,10 @@ public class DemoAServiceImpl implements DemoService {
     @Autowired
     private KeyedObjectPool<String, String> modelPool;
     
+    
+    @Autowired
+    private GenericObjectPool<String> commonPool;
+    
     @Override
     public String hello(String name) {
         return "hello DemoA " + name;
@@ -30,24 +35,73 @@ public class DemoAServiceImpl implements DemoService {
     
     @Override
     public String resoucePoolWork(String key) {
-    
+        
+        String res = "";
+        
         String handler = null;
-    
         try {
             handler = modelPool.borrowObject(key);
+            log.info(">>> [borrow] before work, key is: {}, handler is:{}", key, handler);
+            
+            
+            // sleep 100ms
+            Thread.sleep(100);
+            res = "[resoucePoolWork] handler is: " + handler;
+            
+            
+            log.info(">>> [handling]  modelPool.getNumActive(): {}, modelPool.getNumActive(key):{},  modelPool.getNumIdle(): {}, modelPool.getNumIdle(key): {}",
+                    modelPool.getNumActive(),
+                    modelPool.getNumActive(key),
+                    modelPool.getNumIdle(),
+                    modelPool.getNumIdle(key));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(StringUtils.isNotBlank(handler)) {
+            if (StringUtils.isNotBlank(handler)) {
                 try {
                     modelPool.returnObject(key, handler);
+                    log.info(">>> [return] after work, key is: {}, handler is:{}", key, handler);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+        return res;
+    }
     
     
-        return null;
+    @Override
+    public String commonPoolWork() {
+        
+        
+        String res = "";
+        
+        String handler = null;
+        try {
+            handler = commonPool.borrowObject();
+            log.info(">>> [borrow-commonPool] before work, handler is:{}", handler);
+            
+            // sleep 100ms
+            Thread.sleep(100);
+            res = "[resoucePoolWork-commonPool] handler is: " + handler;
+            
+            
+            log.info(">>> [handling-commonPool]  modelPool.getNumActive(): {}, modelPool.getNumIdle(): {}, getNumWaiters(): {}",
+                    commonPool.getNumActive(),
+                    commonPool.getNumIdle(),
+                    commonPool.getNumWaiters());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (StringUtils.isNotBlank(handler)) {
+                try {
+                    commonPool.returnObject(handler);
+                    log.info(">>> [return-commonPool] after work,  handler is:{}", handler);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return res;
     }
 }

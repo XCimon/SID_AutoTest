@@ -10,4 +10,6 @@ public interface DemoService {
     
     String resoucePoolWork(String key);
     
+    String commonPoolWork();
+    
 }

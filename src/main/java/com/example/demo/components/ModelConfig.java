@@ -2,8 +2,11 @@ package com.example.demo.components;
 
 import org.apache.commons.pool2.KeyedObjectPool;
 import org.apache.commons.pool2.KeyedPooledObjectFactory;
+import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +29,12 @@ public class ModelConfig {
 //
 //
 //
+    
+    @Bean
+    public CommonHandlerFactory commonHandlerFactory(){
+        return new CommonHandlerFactory();
+    }
+    
     @Bean
     public KeyedPooledObjectFactory handlerFactory() {
         return new HandlerFactory();
@@ -58,14 +67,14 @@ public class ModelConfig {
     @Bean
     public GenericKeyedObjectPoolConfig poolConfig() {
         GenericKeyedObjectPoolConfig conf = new GenericKeyedObjectPoolConfig();
-        conf.setJmxEnabled(false);
-        
-        conf.setMaxTotal(128);
-        conf.setMaxTotalPerKey(128);
-        conf.setMinIdlePerKey(0);
-        conf.setSoftMinEvictableIdleTimeMillis(1000 * 60 * 5); // 允许空闲时间（单位：ms）
-        conf.setTimeBetweenEvictionRunsMillis(60000); // 驱逐线程的运行间隔（单位：ms）
-        conf.setNumTestsPerEvictionRun(-1); // 每次回收检查的池对象个数（value=0：不回收资源；value<0: ceil(池中空闲资源数/abs(value)); value>0 : min(value,池中空闲的资源数)）
+//        conf.setJmxEnabled(false);
+//
+        conf.setMaxTotal(15);
+        conf.setMaxTotalPerKey(15);
+//        conf.setMinIdlePerKey(0);
+//        conf.setSoftMinEvictableIdleTimeMillis(1000 * 60 * 5); // 允许空闲时间（单位：ms）
+//        conf.setTimeBetweenEvictionRunsMillis(60000); // 驱逐线程的运行间隔（单位：ms）
+        conf.setNumTestsPerEvictionRun(0); // 每次回收检查的池对象个数（value=0：不回收资源；value<0: ceil(池中空闲资源数/abs(value)); value>0 : min(value,池中空闲的资源数)）
         return conf;
     }
     
@@ -74,5 +83,21 @@ public class ModelConfig {
                                                      GenericKeyedObjectPoolConfig poolConfig) {
         return new GenericKeyedObjectPool(handlerFactory, poolConfig);
     }
+    
+    @Bean
+    public GenericObjectPoolConfig<String> commonPoolConfig(){
+        GenericObjectPoolConfig<String> c = new GenericObjectPoolConfig<String>();
+        c.setMaxTotal(15);
+//        c.setBlockWhenExhausted();
+        return c;
+    }
+    
+    
+    @Bean
+    public GenericObjectPool<String> commonPool(PooledObjectFactory<String> factory, GenericObjectPoolConfig<String> config){
+        return new GenericObjectPool<>(factory,config);
+    }
+    
+    
     
 }

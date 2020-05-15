@@ -36,4 +36,10 @@ public class DemoController {
         return demoService.resoucePoolWork(key);
     }
     
+    @ApiOperation(value = "common", httpMethod = "GET")
+    @GetMapping("/common")
+    public String commonhandler() {
+        return demoService.commonPoolWork();
+    }
+    
 }

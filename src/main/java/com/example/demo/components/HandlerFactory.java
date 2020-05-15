@@ -18,17 +18,23 @@ public class HandlerFactory extends BaseKeyedPooledObjectFactory<String, String>
     
     @Override
     public String create(String key) throws Exception {
-        
-        return key + cnt.incrementAndGet();
+        int count = cnt.incrementAndGet();
+        log.info(">>> [HandlerFactory] create a new resource, key:{} ,total resource count:{}", key, count);
+        return key + count;
     }
     
     @Override
     public PooledObject<String> wrap(String value) {
         return new DefaultPooledObject<>(value);
     }
-
-
-//
+    
+    @Override
+    public void destroyObject(String key, PooledObject<String> p) throws Exception {
+        log.info(">>> [HandlerFactory] destroy a resource, key:{} ,total resource count:{}", key, cnt.decrementAndGet());
+        super.destroyObject(key, p);
+    }
+    
+    //
 //
 //    @Override
 //    public Long create(KeyObject key) throws Exception {

@@ -24,4 +24,9 @@ public class DemoBServiceImpl implements DemoService {
     public String resoucePoolWork(String key) {
         return null;
     }
+    
+    @Override
+    public String commonPoolWork() {
+        return null;
+    }
 }
