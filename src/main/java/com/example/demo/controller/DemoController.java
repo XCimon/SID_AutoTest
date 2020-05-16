@@ -42,4 +42,11 @@ public class DemoController {
         return demoService.commonPoolWork();
     }
     
+    
+    @ApiOperation(value = "custom", httpMethod = "GET")
+    @GetMapping("/custom")
+    public String custom() {
+        return demoService.customPoolWork();
+    }
+    
 }

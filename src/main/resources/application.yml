@@ -5,3 +5,6 @@ server:
 #demo:
 #  A.enable: false
 #  B.enable: true
+
+pool:
+  size: 30

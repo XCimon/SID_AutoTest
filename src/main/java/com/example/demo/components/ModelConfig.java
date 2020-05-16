@@ -7,6 +7,7 @@ import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,6 +30,8 @@ public class ModelConfig {
 //
 //
 //
+    @Value("${pool.size}")
+    int size;
     
     @Bean
     public CommonHandlerFactory commonHandlerFactory(){
@@ -69,11 +72,12 @@ public class ModelConfig {
         GenericKeyedObjectPoolConfig conf = new GenericKeyedObjectPoolConfig();
 //        conf.setJmxEnabled(false);
 //
-        conf.setMaxTotal(15);
-        conf.setMaxTotalPerKey(15);
+        conf.setMaxTotal(size);
+        conf.setMaxTotalPerKey(size);
 //        conf.setMinIdlePerKey(0);
-//        conf.setSoftMinEvictableIdleTimeMillis(1000 * 60 * 5); // 允许空闲时间（单位：ms）
-//        conf.setTimeBetweenEvictionRunsMillis(60000); // 驱逐线程的运行间隔（单位：ms）
+        conf.setSoftMinEvictableIdleTimeMillis(1000 * 60 * 5); // 允许空闲时间（单位：ms）
+        conf.setMaxWaitMillis(3000);
+        conf.setTimeBetweenEvictionRunsMillis(60000); // 驱逐线程的运行间隔（单位：ms）
         conf.setNumTestsPerEvictionRun(0); // 每次回收检查的池对象个数（value=0：不回收资源；value<0: ceil(池中空闲资源数/abs(value)); value>0 : min(value,池中空闲的资源数)）
         return conf;
     }
@@ -87,7 +91,7 @@ public class ModelConfig {
     @Bean
     public GenericObjectPoolConfig<String> commonPoolConfig(){
         GenericObjectPoolConfig<String> c = new GenericObjectPoolConfig<String>();
-        c.setMaxTotal(15);
+        c.setMaxTotal(size);
 //        c.setBlockWhenExhausted();
         return c;
     }

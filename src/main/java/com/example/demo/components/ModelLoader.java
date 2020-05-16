@@ -1,10 +1,14 @@
 package com.example.demo.components;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Cirmons
@@ -23,6 +27,30 @@ public class ModelLoader implements ApplicationListener<ContextRefreshedEvent>, 
 //    @Autowired
 //    private Map<String, HandlerFactory.KeyObject> modelPathPoolKeyMap;
     
+    int capacity = 1000;
+    @Getter
+    private ArrayBlockingQueue<String> handlerPool = new ArrayBlockingQueue<>(capacity);
+    
+    public String borrow(){
+        String handler = null;
+    
+        try {
+            handler = handlerPool.poll(1000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    
+        return handler;
+    }
+    
+    public void returnObject(String handler){
+        try {
+            handlerPool.put(handler);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     @Override
     public int getOrder() {
@@ -32,8 +60,15 @@ public class ModelLoader implements ApplicationListener<ContextRefreshedEvent>, 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         log.info(">>> init ModelMap...");
-//        initOcrModelMap();
-//        initModelPathPoolKeyMap();
+    
+        for (int i = 0; i < capacity ; i++) {
+            try {
+                handlerPool.put("**custom pool handler**"+i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         log.info(">>> completed to init ModelMap!");
     }
 

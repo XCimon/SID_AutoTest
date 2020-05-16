@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.components.ModelLoader;
 import com.example.demo.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,8 +23,10 @@ public class DemoAServiceImpl implements DemoService {
     
     
     @Autowired
-    private KeyedObjectPool<String, String> modelPool;
+    private ModelLoader modelLoader;
     
+    @Autowired
+    private KeyedObjectPool<String, String> modelPool;
     
     @Autowired
     private GenericObjectPool<String> commonPool;
@@ -45,7 +48,7 @@ public class DemoAServiceImpl implements DemoService {
             
             
             // sleep 100ms
-            Thread.sleep(100);
+            Thread.sleep(3 * 1000);
             res = "[resoucePoolWork] handler is: " + handler;
             
             
@@ -69,6 +72,8 @@ public class DemoAServiceImpl implements DemoService {
         return res;
     }
     
+    
+   
     
     @Override
     public String commonPoolWork() {
@@ -103,5 +108,37 @@ public class DemoAServiceImpl implements DemoService {
             }
         }
         return res;
+    }
+    
+    @Override
+    public String customPoolWork() {
+        String res = "";
+    
+        String handler = null;
+        try {
+            handler = modelLoader.borrow();
+            log.info(">>> [borrow-custompool] before work, handler is:{}", handler);
+        
+            // sleep 100ms
+            Thread.sleep(100);
+            res = "[custompool] handler is: " + handler;
+            
+            log.info(">>> [handling-custompool]  modelLoader.getHandlerPool().size(): {}, modelLoader.getHandlerPool().remainingCapacity(): {}",
+                    modelLoader.getHandlerPool().size(),
+                    modelLoader.getHandlerPool().remainingCapacity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (StringUtils.isNotBlank(handler)) {
+                try {
+                    modelLoader.returnObject(handler);
+                    log.info(">>> [return-custompool] after work,  handler is:{}", handler);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return res;
+
     }
 }

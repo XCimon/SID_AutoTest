@@ -29,4 +29,10 @@ public class DemoBServiceImpl implements DemoService {
     public String commonPoolWork() {
         return null;
     }
+    
+    
+    @Override
+    public String customPoolWork() {
+        return null;
+    }
 }
