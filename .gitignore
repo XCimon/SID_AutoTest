@@ -33,3 +33,4 @@ build/
 mvnw*
 .mvn
 
+.DS_*
