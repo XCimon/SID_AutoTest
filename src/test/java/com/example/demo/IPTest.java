@@ -21,4 +21,12 @@ public class IPTest {
         
     }
     
+    
+    @Test
+    public void testJarFilePath(){
+        String path1 = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        String path2 = System.getProperty("java.class.path");
+        System.out.println(1);
+    }
+    
 }
