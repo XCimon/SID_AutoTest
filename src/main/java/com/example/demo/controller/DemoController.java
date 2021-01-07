@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.Callable;
+
 /**
  * @Author Cirmons
  * @Date 2018-06-06
@@ -27,8 +29,33 @@ public class DemoController {
     @ApiOperation(value = "hello", httpMethod = "GET")
     @GetMapping("/hello")
     public String hello(@RequestParam String name) {
+        try {
+            Thread.sleep(4000l);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return demoService.hello(name);
     }
+    
+    @ApiOperation(value = "hello", httpMethod = "GET")
+    @GetMapping("/hellob")
+    public Callable<String> helloB(@RequestParam String name) {
+        
+        return new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+    
+                try {
+                    Thread.sleep(4000l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return demoService.hello(name);
+            }
+        };
+    }
+    
+    
     
     @ApiOperation(value = "handler", httpMethod = "GET")
     @GetMapping("/handler")

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2019-05-13
  */
 @Slf4j
-@Component
+//@Component
 public class ModelLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
 //    @Resource

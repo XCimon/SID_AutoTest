@@ -1,10 +1,22 @@
 server:
   port: 8932
+  connection-timeout: 2
+  tomcat:
+    connection-timeout: 2
+  jetty:
+    connection-idle-timeout: 2
+  netty:
+    connection-timeout: 2
 
-
-#demo:
-#  A.enable: false
-#  B.enable: true
+spring:
+  mvc:
+    async:
+      request-timeout: 2
+demo:
+  A.enable: false
+  B.enable: true
 
 pool:
   size: 30
+
+

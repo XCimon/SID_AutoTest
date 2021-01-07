@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @Author: Cirmons
  * @Date: 2019-05-14
  */
-@Configuration
+//@Configuration
 public class ModelConfig {
     //    /**
 //     *  模型句柄平均占用内存 300 MB
