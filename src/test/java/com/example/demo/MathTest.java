@@ -42,4 +42,23 @@ public class MathTest {
     
     }
     
+    
+    private static class A{
+        boolean a;
+    }
+    @Test
+    public void testBool(){
+        A obj = new A();
+        System.out.println(obj.a);
+    }
+    
+    @Test
+    public void testString(){
+        String st = null;
+        if("aa".equalsIgnoreCase(st))
+            System.out.println(1);
+        
+        
+    }
+    
 }
