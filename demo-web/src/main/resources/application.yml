@@ -1,22 +1,36 @@
 server:
   port: 8932
-  connection-timeout: 2
-  tomcat:
-    connection-timeout: 2
-  jetty:
-    connection-idle-timeout: 2
-  netty:
-    connection-timeout: 2
-
+#  connection-timeout: 2
+#  tomcat:
+#    connection-timeout: 2
+#  jetty:
+#    connection-idle-timeout: 2
+#  netty:
+#    connection-timeout: 2
+#
+#spring:
+#  mvc:
+#    async:
+#      request-timeout: 2
 spring:
-  mvc:
-    async:
-      request-timeout: 2
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://10.151.5.183:30306/map?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    username: root
+    password: senseBA2019*
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+
 demo:
   A.enable: false
   B.enable: true
 
 pool:
   size: 30
+
 
 

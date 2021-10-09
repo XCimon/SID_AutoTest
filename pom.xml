@@ -13,6 +13,7 @@
 
     <modules>
         <module>demo-web</module>
+        <module>demo-data-access</module>
     </modules>
 
 
@@ -36,6 +37,24 @@
     <dependencyManagement>
         <dependencies>
 
+            <!--project module start-->
+            <dependency>
+                <groupId>personal.xp</groupId>
+                <artifactId>demo-web</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>personal.xp</groupId>
+                <artifactId>demo-data-access</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!--project module end-->
+
+
             <!-- spring framework start -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -56,8 +75,6 @@
 
 
             <!-- common utils start -->
-
-
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
