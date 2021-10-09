@@ -2,23 +2,27 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>com.example</groupId>
+    <packaging>pom</packaging>
+
+
+    <groupId>personal.xp</groupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <modules>
+        <module>demo-web</module>
+    </modules>
+
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -27,81 +31,218 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.31</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.8.0</version>
-        </dependency>
-
-
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- spring framework start -->
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring framework end -->
+
+
+            <!-- common utils start -->
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <!-- common utils end -->
+
+
+            <!--swagger start-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!--swagger end-->
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+
+        <mybatisplus-spring-boot-starter.version>1.0.1</mybatisplus-spring-boot-starter.version>
+        <druid.version>1.0.28</druid.version>
+
+
+        <lombok.version>1.18.20</lombok.version>
+
+        <swagger.version>2.7.0</swagger.version>
+        <fastjson.version>1.2.31</fastjson.version>
+        <commons.io.version>2.5</commons.io.version>
+        <commons-lang3.version>3.0</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-pool2.version>2.8.0</commons-pool2.version>
+
+        <!--spring framework version-->
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-boot.version>2.5.3</spring-boot.version>
+
+        <!--plugin version-->
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <mybatis-plus.version>2.1.4</mybatis-plus.version>
+    </properties>
+
+
+    <build>
+
+        <plugins>
+            <!--modify pom file plugin-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.8.1</version>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <copy failonerror="false" overwrite="true" force="true"
+                                          todir="${project.build.outputDirectory}/refs/">
+                                        <fileset dir="${project.basedir}/.git/refs" includes="**"/>
+                                    </copy>
+                                    <copy failonerror="false" overwrite="true" force="true"
+                                          file="${project.basedir}/.git/HEAD"
+                                          tofile="${project.build.outputDirectory}/HEAD"/>
+                                    <copy failonerror="false" overwrite="true" force="true"
+                                          todir="${project.build.outputDirectory}/refs/">
+                                        <fileset dir="${project.basedir}/../.git/refs" includes="**"/>
+                                    </copy>
+                                    <copy failonerror="false" overwrite="true" force="true"
+                                          file="${project.basedir}/../.git/HEAD"
+                                          tofile="${project.build.outputDirectory}/HEAD"/>
+                                    <!--                                    <copy failonerror="false" overwrite="true" force="true"-->
+                                    <!--                                          file="${project.build.outputDirectory}/application-${target.env}.yml"-->
+                                    <!--                                          tofile="${project.build.outputDirectory}/application.yml"/>-->
+                                    <delete quiet="true">
+                                        <fileset dir="${project.build.outputDirectory}/" includes="*-*.yml"/>
+                                    </delete>
+                                    <!--                                    <copy failonerror="false" overwrite="true" force="true"-->
+                                    <!--                                          file="${project.build.outputDirectory}/config-${target.env}.properties"-->
+                                    <!--                                          tofile="${project.build.outputDirectory}/config.properties"/>-->
+                                    <delete quiet="true">
+                                        <fileset dir="${project.build.outputDirectory}/" includes="*-*.properties"/>
+                                    </delete>
+                                    <delete quiet="true" dir="${project.build.outputDirectory}/sql"/>
+                                    <delete quiet="true" dir="${project.build.outputDirectory}/db"/>
+                                    <delete quiet="true" dir="${project.build.outputDirectory}/cpp"/>
+                                    <delete quiet="true" dir="${project.build.outputDirectory}/testcase"/>
+                                    <delete quiet="true">
+                                        <fileset dir="${project.build.outputDirectory}/" includes="*.sql"/>
+                                    </delete>
+                                    <delete quiet="true">
+                                        <fileset dir="${project.build.outputDirectory}/" includes="rebel.xml"/>
+                                    </delete>
+                                    <delete quiet="true">
+                                        <fileset dir="${project.build.outputDirectory}/" includes="*lic.yml"/>
+                                    </delete>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>11</source>
+                        <target>11</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
