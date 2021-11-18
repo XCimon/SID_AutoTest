@@ -34,3 +34,9 @@ mvnw*
 .mvn
 
 .DS_*
+
+
+
+### custom ###
+**/RestTest.java
+**/req_str.txt
