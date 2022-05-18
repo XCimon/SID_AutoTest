@@ -40,3 +40,4 @@ mvnw*
 ### custom ###
 **/RestTest.java
 **/req_str.txt
+**/features.json
