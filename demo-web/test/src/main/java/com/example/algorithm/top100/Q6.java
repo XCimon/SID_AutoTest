@@ -1,5 +1,6 @@
 package com.example.algorithm.top100;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
 /**
@@ -94,14 +95,90 @@ public class Q6 {
     
     
     public String convert(String s, int numRows) {
+        if (numRows <= 1 || s.length() <= 1)
+            return s;
+        int length = s.length();
+        char[][] tmpArr = new char[numRows][length - 1];
         
-        return "";
+        char[] chars = s.toCharArray();
+        int x = 0;
+        int y = 0;
+        int cnt = 0;
+        
+        int xFlag = numRows;
+        // transform data
+        while (cnt < length) {
+            while (y < numRows && cnt < length) {
+                tmpArr[y][x] = chars[cnt];
+                y++;
+                cnt++;
+            }
+            y--;
+            x++;
+            while (x < xFlag && cnt < length) {
+                y--;
+                tmpArr[y][x] = chars[cnt];
+                x++;
+                cnt++;
+            }
+            y++;
+            x--;
+            xFlag = xFlag + numRows - 1;
+        }
+        
+        // get result
+        char[] newChars = new char[length];
+        int index = 0;
+        for (int i = 0; i < tmpArr.length; i++) {
+            char[] row = tmpArr[i];
+            for (int j = 0; j < row.length; j++) {
+                if (row[j] != '\u0000') {
+                    newChars[index] = row[j];
+                    index++;
+                }
+            }
+        }
+        
+        String newStr = new String(newChars);
+        
+        
+        return newStr;
     }
     
     
     @Test
-    public void test(){
+    public void test1() {
+        String s = "PAYPALISHIRING";
+        int numRows = 3;
+        
+        char[][] chars = new char[numRows][s.length()];
+        chars[0][1] = 'l';
+        chars[2][4] = '0';
+        chars[2][3] = 'v';
+        
+        System.out.println(JSON.toJSONString(chars));
+    }
     
+    
+    @Test
+    public void test2() {
+        String s = "PAYPALISHIRING";
+        int numRows = 3;
+        
+        String convert = convert(s, numRows);
+        System.out.println(convert);
+        
+    }
+    
+    @Test
+    public void test3() {
+        String s = "A";
+        int numRows = 2;
+        
+        String convert = convert(s, numRows);
+        System.out.println(convert);
+        
+        
     }
     
 }
