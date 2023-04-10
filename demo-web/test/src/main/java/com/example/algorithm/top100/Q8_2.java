@@ -109,7 +109,7 @@ public class Q8_2 {
         State state = State.start;
         int i = -1;
         boolean isPositive = true;
-        int tmpResult = 0;
+        long tmpResult = 0;
         boolean stop = false;
         
         while (!stop) {
