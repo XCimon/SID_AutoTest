@@ -99,51 +99,44 @@ public class Q8_2 {
     public int myAtoi(String s) {
         int value = 0;
         
-        int indexStart = 0;
-        int indexEnd = 0;
+        char[] chars = s.toCharArray();
+        
+        // 检查
+        if (chars.length <= 0)
+            return value;
+        
+        // 初始化计算参数
+        State state = State.start;
+        int i = -1;
         boolean isPositive = true;
-        
-        char[] chars = (s).toCharArray();
-        
-        State currentState = State.start;
-        
-        
-        int i = 0;
+        int tmpResult = 0;
         boolean stop = false;
         
         while (!stop) {
-            switch (currentState) {
+            char c = i < chars.length - 1 ? chars[++i] : '#';
+            state = StatsTable.nextState(state, c);
+            switch (state) {
                 case start:
-                    indexStart = i;
                     break;
                 case signed:
-                    isPositive = (chars[i] != '-') ? true : false;
-                    indexStart = i;
+                    isPositive = (c != '-') ? true : false;
                     break;
                 case in_number:
+                    tmpResult = tmpResult * 10 + Integer.parseInt(String.valueOf(c));
                     break;
                 case end:
-                    indexEnd = i;
                     stop = true;
                     break;
             }
-            
-            char c = i < chars.length ? chars[i] : '#';
-            currentState = StatsTable.nextState(currentState, c);
-            i++;
         }
         
-        String str = s.substring(indexStart, indexEnd);
-        if (str.length() <= 0 || (str.length() == 1 && "+".equals(str) || "-".equals(str)))
-            return value;
-        try {
-            value = Integer.parseInt(str);
-        } catch (NumberFormatException e) {
-            value = Integer.MAX_VALUE;
-            if (!isPositive)
-                value = Integer.MIN_VALUE;
+        // 计算是否超过int 范围
+        if (isPositive) {
+            value = tmpResult > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) tmpResult;
+        } else {
+            tmpResult = tmpResult * -1;
+            value = tmpResult < Integer.MIN_VALUE ? Integer.MIN_VALUE : (int) tmpResult;
         }
-        
         return value;
     }
     
@@ -157,13 +150,13 @@ public class Q8_2 {
             stateTable.put(State.end, List.of(State.end, State.end, State.end, State.end));
         }
         
-        public static State nextState(State currentState, char c) {
+        public static State nextState(State currentState, char nextc) {
             int index;
-            if (c == ' ')
+            if (nextc == ' ')
                 index = 0;
-            else if (c == '+' || c == '-')
+            else if (nextc == '+' || nextc == '-')
                 index = 1;
-            else if (Character.isDigit(c))
+            else if (Character.isDigit(nextc))
                 index = 2;
             else
                 index = 3;
@@ -179,7 +172,7 @@ public class Q8_2 {
     @Test
     public void test() {
         
-        String s = "  0000000000012345678";
+        String s = "9223372036854775808";
         
         int i = myAtoi(s);
         System.out.println(i);
