@@ -2,6 +2,10 @@ package com.example.algorithm.top100;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 8. 字符串转换整数 (atoi)
  * 中等
@@ -91,87 +95,93 @@ import org.junit.Test;
  * @Date: 2023-04-06
  */
 public class Q8 {
-
-//    public int myAtoi(String s) {
-//
-//        char[] chars = s.toCharArray();
-//
-//
-//        for (int i = 0; i < chars.length; i++) {
-//            // 如果是第一位且为符号'-'，符号后一位是数字，这样的符号不做替换
-//            boolean flagCheck0 = chars[i] == '-'
-//                    && (i == 0 && i + 1 < chars.length && isDigest(chars[i + 1]));
-//
-//            // 如果不是第一位且为符号'-'，且符号前一位不是数字，符号后一位是数字，这样的符号不做替换
-//            boolean flagCheck1 = chars[i] == '-'
-//                    && (i + 1 < chars.length && isDigest(chars[i + 1]))
-//                    && (i != 0 && i - 1 > 0 && !isDigest(chars[i - 1]));
-//
-//            if (isDigest(chars[i]) || flagCheck0 || flagCheck1) {
-//                continue;
-//            }
-//            chars[i] = '#';
-//        }
-//
-//        String[] split = new String(chars).split("#");
-//        if (split.length <= 0)
-//            return 0;
-//
-//
-//        int value = 0;
-//        boolean isNegative = false;
-//        for (String str : split) {
-//            if ("".equals(str))
-//                continue;
-//
-//            if (str.charAt(0) == '-')
-//                isNegative = true;
-//            try {
-//                value = Integer.parseInt(str);
-//            } catch (NumberFormatException e) {
-//                value = Integer.MAX_VALUE;
-//                if (isNegative)
-//                    value = Integer.MIN_VALUE;
-//
-//            }
-//            break;
-//        }
-//        return value;
-//    }
     
     public int myAtoi(String s) {
         int value = 0;
-        char[] chars = s.trim().toCharArray();
         
-        // check
-        boolean checkMoreThan1 = chars.length > 1 && (isDigest(chars[0]) || (chars[0] == '-' || chars[0] == '+') && isDigest(chars[1]));
-        if (chars.length < 1 || chars.length == 1 && !isDigest(chars[0]) || !checkMoreThan1) {
+        char[] chars = s.toCharArray();
+        
+        // 检查
+        if (chars.length <= 0)
             return value;
+        
+        // 初始化计算参数
+        State state = State.start;
+        int i = -1;
+        boolean isPositive = true;
+        int tmpResult = 0;
+        boolean stop = false;
+        
+        while (!stop) {
+            char c = i < chars.length - 1 ? chars[++i] : '#';
+            state = StatsTable.nextState(state, c);
+            switch (state) {
+                case start:
+                    break;
+                case signed:
+                    isPositive = (c != '-') ? true : false;
+                    break;
+                case in_number:
+                    int plusInt = Integer.parseInt(String.valueOf(c));
+                    if (tmpResult > 214748364 || tmpResult == 214748364 && isPositive && plusInt >= 7 || tmpResult == 214748364 && !isPositive && plusInt >= 8) {
+                        if (isPositive)
+                            return Integer.MAX_VALUE; // 2147483647
+                        else
+                            return Integer.MIN_VALUE; // -2147483648
+                    } else
+                        tmpResult = tmpResult * 10 + plusInt;
+                    break;
+                case end:
+                    stop = true;
+                    break;
+            }
         }
         
-        
-        
+        // 计算正负
+        if (!isPositive)
+            value = tmpResult * -1;
+        else
+            value = tmpResult;
         return value;
     }
     
-    
-    public boolean isDigest(char c) {
-        char[] defaultChars = "0123456789".toCharArray();
-        boolean flag = false;
-        for (char defaultChar : defaultChars) {
-            if (c == defaultChar) {
-                flag = true;
-                break;
-            }
+    /**
+     * 构建"确定状态自动机",
+     * 参见： https://leetcode.cn/problems/string-to-integer-atoi/solutions/183164/zi-fu-chuan-zhuan-huan-zheng-shu-atoi-by-leetcode-/
+     */
+    static class StatsTable {
+        private static Map<State, List<State>> stateTable = new HashMap<>();
+        
+        static {
+            stateTable.put(State.start, List.of(State.start, State.signed, State.in_number, State.end));
+            stateTable.put(State.signed, List.of(State.end, State.end, State.in_number, State.end));
+            stateTable.put(State.in_number, List.of(State.end, State.end, State.in_number, State.end));
+            stateTable.put(State.end, List.of(State.end, State.end, State.end, State.end));
         }
-        return flag;
+        
+        public static State nextState(State currentState, char nextc) {
+            int index;
+            if (nextc == ' ')
+                index = 0;
+            else if (nextc == '+' || nextc == '-')
+                index = 1;
+            else if (Character.isDigit(nextc))
+                index = 2;
+            else
+                index = 3;
+            return stateTable.get(currentState).get(index);
+        }
+    }
+    
+    enum State {
+        start, signed, in_number, end;
     }
     
     
     @Test
     public void test() {
         
-        String s = "3.14159";
+        String s = "-2147483647";
         
         int i = myAtoi(s);
         System.out.println(i);
