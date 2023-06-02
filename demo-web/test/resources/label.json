@@ -1,0 +1,228 @@
+{
+  "labels": [
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 0,
+      "label": "Knife",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 1,
+      "label": "Gun",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 2,
+      "label": "Container",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 3,
+      "label": "Electronic",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 4,
+      "label": "Battery",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 5,
+      "label": "Lighter",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 6,
+      "label": "Umbrella",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 7,
+      "label": "Cigar",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 8,
+      "label": "Seal",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 9,
+      "label": "Fireworks",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 10,
+      "label": "Bullet",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 11,
+      "label": "Grenade",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 12,
+      "label": "Meat",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 13,
+      "label": "Syringe",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 14,
+      "label": "Tank",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 15,
+      "label": "Bag",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 16,
+      "label": "Shovel",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 17,
+      "label": "Scissor",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 18,
+      "label": "Plier",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 19,
+      "label": "Axe",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 20,
+      "label": "ScrewDriver",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 21,
+      "label": "MetalStick",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 22,
+      "label": "Drill",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 23,
+      "label": "Handcuff",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 24,
+      "label": "Knuckle",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 25,
+      "label": "Slingshot",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 26,
+      "label": "FlashLight",
+      "filter_w": 0,
+      "filter_h": 0
+    },
+    {
+      "confidence_thresh": 0,
+      "thresh": 0,
+      "id": 27,
+      "label": "Lead-acid",
+      "filter_w": 0,
+      "filter_h": 0
+    }
+  ]
+}
